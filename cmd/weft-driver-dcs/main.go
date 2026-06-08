@@ -16,6 +16,7 @@ import (
 
 	weftplugin "github.com/openweft/weft-driver-plugin"
 	dcsdriver "github.com/openweft/weft-driver-dcs/builtin"
+	weftslognats "github.com/openweft/weft-slognats"
 )
 
 // Env vars the host passes through. VRM endpoint + credentials are
@@ -33,7 +34,11 @@ const (
 )
 
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	hostUUID := os.Getenv(weftplugin.EnvHostUUID)
+	logger, logCloser := weftslognats.SetupFromEnv("weft.driver.dcs." + hostUUID + ".log")
+	defer logCloser.Close()
+	slog.SetDefault(logger)
+
 	b, err := dcsdriver.NewBundle(dcsdriver.Options{
 		VRMEndpoint:   os.Getenv(envVRMEndpoint),
 		Username:      os.Getenv(envUsername),
