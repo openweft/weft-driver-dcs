@@ -44,8 +44,8 @@ github.com/openweft/weft-driver-plugin v0.3.0 h1:BLRLzyhiMRnTkNGmxkgPhZe84rd3S/A
 github.com/openweft/weft-driver-plugin v0.3.0/go.mod h1:XydGW9p9V8GoDt0ZG8ze1ej9D1bZevM7hN7rPr18D6U=
 github.com/openweft/weft-drivers v0.2.0 h1:VuP/SxDtUoS3d4TGa/UKiQP9DeZ62D608uMSd69waDQ=
 github.com/openweft/weft-drivers v0.2.0/go.mod h1:/AW5NajkOTC6iFJZOfVun5tgQ2sw+GglRkxcMg55fx8=
-github.com/openweft/weft-slognats v0.2.0 h1:qE3LScrliyDIdtqwdxN9MO/8XakZxAKRgoPlqKXGXjA=
-github.com/openweft/weft-slognats v0.2.0/go.mod h1:6szcJAzzSR8lT4S7weWHedDfbjDUf2mR9RXBNM5E4wI=
+github.com/openweft/weft-slognats v0.3.0 h1:g4a52kWtD6pE9xF89AwJScxqgmbeg1XrjlCjBuIR0y0=
+github.com/openweft/weft-slognats v0.3.0/go.mod h1:6szcJAzzSR8lT4S7weWHedDfbjDUf2mR9RXBNM5E4wI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
