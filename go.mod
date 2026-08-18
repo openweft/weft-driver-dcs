@@ -1,6 +1,6 @@
 module github.com/openweft/weft-driver-dcs
 
-go 1.26
+go 1.26.4
 
 require (
 	github.com/openweft/weft-driver-plugin v0.3.0
