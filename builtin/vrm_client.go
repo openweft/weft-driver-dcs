@@ -180,9 +180,9 @@ func (c *vrmClient) do(ctx context.Context, method, path string, in, out any) er
 // vrmTask is the envelope FusionCompute returns from every mutating
 // call. The actual mutation is async ; the task UUID is what we poll.
 type vrmTask struct {
-	TaskURI    string `json:"taskUri"`
-	TaskUUID   string `json:"taskUuid"`
-	Reason     string `json:"reason,omitempty"`
+	TaskURI  string `json:"taskUri"`
+	TaskUUID string `json:"taskUuid"`
+	Reason   string `json:"reason,omitempty"`
 }
 
 // vrmTaskStatus is what GET /service/tasks/{uuid} returns.
