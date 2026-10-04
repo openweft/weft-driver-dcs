@@ -65,13 +65,13 @@ func (v *dcsVolume) volumePath(uuid string) string {
 // "ThickPrealloc").
 func (v *dcsVolume) EnsureVolume(ctx context.Context, spec drivers.VolumeSpec) error {
 	body := map[string]any{
-		"uuid":              spec.UUID,
-		"name":              spec.Name,
-		"quantityGB":        spec.SizeGiB,
-		"datastoreUrn":      "urn:sites:" + v.opts.SiteUUID + ":datastores:" + v.opts.DatastoreUUID,
-		"type":              "normal",
-		"isThin":            true,
-		"persistentDisk":    true,
+		"uuid":           spec.UUID,
+		"name":           spec.Name,
+		"quantityGB":     spec.SizeGiB,
+		"datastoreUrn":   "urn:sites:" + v.opts.SiteUUID + ":datastores:" + v.opts.DatastoreUUID,
+		"type":           "normal",
+		"isThin":         true,
+		"persistentDisk": true,
 	}
 	var task vrmTask
 	if err := v.client().do(ctx, http.MethodPost, v.volumesPath(), body, &task); err != nil {

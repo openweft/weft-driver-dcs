@@ -27,8 +27,8 @@ type dcsHypervisor struct {
 	opts Options
 	log  *slog.Logger
 
-	mu   sync.Mutex
-	vrm  *vrmClient
+	mu  sync.Mutex
+	vrm *vrmClient
 }
 
 func newDCSHypervisor(opts Options) (*dcsHypervisor, error) {
@@ -73,7 +73,7 @@ func (h *dcsHypervisor) vmPath(vmUUID string) string {
 // for a green provisioning :
 //
 //   - osOptions  : guest OS hint (the VRM consumes it for paravirt
-//                  driver injection ; we pass "linux64" by default)
+//     driver injection ; we pass "linux64" by default)
 //   - vmConfig   : cpu / memory / disks subobject
 //   - vmFeature  : empty for the minimal case
 //   - location   : cluster + datastore + (optional) portgroup
@@ -89,7 +89,7 @@ func (h *dcsHypervisor) CreateVM(ctx context.Context, spec drivers.VMSpec) error
 		"uuid":        spec.UUID,
 		"description": fmt.Sprintf("openweft %s", spec.ProjectUUID),
 		"osOptions": map[string]any{
-			"osType": "Linux",
+			"osType":    "Linux",
 			"osVersion": guestOSVersion(spec),
 		},
 		"vmConfig": map[string]any{
@@ -181,7 +181,7 @@ func (h *dcsHypervisor) DeleteVM(ctx context.Context, vmUUID string) error {
 // the target bus/sequence.
 func (h *dcsHypervisor) AttachDisk(ctx context.Context, vmUUID string, disk drivers.DiskSpec) error {
 	body := map[string]any{
-		"volUrn": "urn:sites:" + h.opts.SiteUUID + ":volumes:" + disk.VolumeUUID,
+		"volUrn":      "urn:sites:" + h.opts.SiteUUID + ":volumes:" + disk.VolumeUUID,
 		"sequenceNum": diskSequence(disk),
 		"isBoot":      disk.Boot,
 	}

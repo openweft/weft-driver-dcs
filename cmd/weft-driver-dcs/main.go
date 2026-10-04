@@ -14,8 +14,8 @@ import (
 	"log/slog"
 	"os"
 
-	weftplugin "github.com/openweft/weft-driver-plugin"
 	dcsdriver "github.com/openweft/weft-driver-dcs/builtin"
+	weftplugin "github.com/openweft/weft-driver-plugin"
 	weftslognats "github.com/openweft/weft-slognats"
 )
 
