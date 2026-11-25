@@ -111,9 +111,18 @@ go build -o weft-driver-dcs ./cmd/weft-driver-dcs
 # the plugin process at launch) :
 #   WEFT_DCS_VRM_ENDPOINT=https://vrm.example.cn:7443
 #   WEFT_DCS_USERNAME=gandalf
-#   WEFT_DCS_PASSWORD=...
+#   WEFT_DCS_PASSWORD_FROM=file:/run/secrets/dcs-password
 #   WEFT_DCS_SITE_UUID=...    # optional, defaults to VRM's primary site
 ```
+
+The password is given by reference: `WEFT_DCS_PASSWORD_FROM` is a
+[secretsource](https://github.com/go-authn/secretsource) reference
+(`systemd-creds:`, `keychain:`, `keepassxc:`, `file:`), read once at start-up.
+A missing reference or an empty value is an error, and no error contains the
+value. The plaintext `WEFT_DCS_PASSWORD` still works but is **deprecated**
+(it is readable in `/proc/PID/environ` and inherited by child processes): the
+driver prints a warning and unsets it after reading. Setting both is
+refused. The password is never logged and never passed on a command line.
 
 ## Next steps (rough order)
 
