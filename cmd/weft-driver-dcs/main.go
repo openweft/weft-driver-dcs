@@ -11,10 +11,13 @@
 package main
 
 import (
+	"context"
+	"io"
 	"log/slog"
 	"os"
 
 	dcsdriver "github.com/openweft/weft-driver-dcs/builtin"
+	"github.com/openweft/weft-driver-dcs/internal/secretenv"
 	weftplugin "github.com/openweft/weft-driver-plugin"
 	weftslognats "github.com/openweft/weft-slognats"
 )
@@ -25,7 +28,6 @@ import (
 const (
 	envVRMEndpoint   = "WEFT_DCS_VRM_ENDPOINT"
 	envUsername      = "WEFT_DCS_USERNAME"
-	envPassword      = "WEFT_DCS_PASSWORD"
 	envSiteUUID      = "WEFT_DCS_SITE_UUID"
 	envClusterUUID   = "WEFT_DCS_CLUSTER_UUID"
 	envDatastoreUUID = "WEFT_DCS_DATASTORE_UUID"
@@ -33,16 +35,33 @@ const (
 	envInsecure      = "WEFT_DCS_INSECURE_TLS"
 )
 
+// resolvePassword returns the VRM password from WEFT_DCS_PASSWORD_FROM (a
+// secretsource reference) or, deprecated, from WEFT_DCS_PASSWORD. Both set
+// is an error. The plaintext variable is unset afterwards so it is not
+// inherited by child processes. Errors never contain the value.
+func resolvePassword(ctx context.Context, warn io.Writer) (string, error) {
+	if err := secretenv.Resolve(ctx, warn, "WEFT_DCS_PASSWORD"); err != nil {
+		return "", err
+	}
+	return secretenv.Get("WEFT_DCS_PASSWORD"), nil
+}
+
 func main() {
 	hostUUID := os.Getenv(weftplugin.EnvHostUUID)
 	logger, logCloser := weftslognats.SetupFromEnv("weft.driver.dcs." + hostUUID + ".log")
 	defer logCloser.Close()
 	slog.SetDefault(logger)
 
+	password, err := resolvePassword(context.Background(), os.Stderr)
+	if err != nil {
+		logger.Error("weft-driver-dcs : password", "err", err)
+		os.Exit(1)
+	}
+
 	b, err := dcsdriver.NewBundle(dcsdriver.Options{
 		VRMEndpoint:   os.Getenv(envVRMEndpoint),
 		Username:      os.Getenv(envUsername),
-		Password:      os.Getenv(envPassword),
+		Password:      password,
 		SiteUUID:      os.Getenv(envSiteUUID),
 		ClusterUUID:   os.Getenv(envClusterUUID),
 		DatastoreUUID: os.Getenv(envDatastoreUUID),

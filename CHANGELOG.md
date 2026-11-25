@@ -9,6 +9,18 @@ and this project aims to adhere to [Semantic Versioning](https://semver.org/spec
 
 ### Added
 
+- **`WEFT_DCS_PASSWORD_FROM`**: the VRM password by secretsource reference
+  (`systemd-creds:`, `keychain:`, `keepassxc:`, `file:`). Both it and the
+  plaintext variable set is refused; a missing reference or an empty value is
+  an error that never contains the value.
+
+### Deprecated
+
+- Plaintext `WEFT_DCS_PASSWORD` (readable in `/proc/PID/environ`): still
+  works with a warning on stderr, and is unset after reading.
+
+### Added (earlier)
+
 - **Operational REST client for the FusionCompute VRM.**
   `builtin/vrm_client.go` implements the cookie-based session auth
   (`POST /service/session` returning `X-Auth-Token`), the SHA-256
